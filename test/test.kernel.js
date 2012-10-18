@@ -24,17 +24,18 @@ describe('kernel', function () {
     itShouldBeDefined(mmap, 'PROT_EXEC');
     itShouldBeDefined(mmap, 'MAP_SHARED');
     itShouldBeDefined(mmap, 'MAP_PRIVATE');
-    itShouldBeDefined(mmap, 'MAP_32BIT');
-    itShouldBeDefined(mmap, 'MAP_ANONYMOUS');
-    itShouldBeDefined(mmap, 'MAP_FIXED');
-    itShouldBeDefined(mmap, 'MAP_GROWSDOWN');
-    itShouldBeDefined(mmap, 'MAP_HUGETLB');
-    itShouldBeDefined(mmap, 'MAP_LOCKED');
-    itShouldBeDefined(mmap, 'MAP_NONBLOCK');
     itShouldBeDefined(mmap, 'MAP_NORESERVE');
-    itShouldBeDefined(mmap, 'MAP_POPULATE');
-    itShouldBeDefined(mmap, 'MAP_STACK');
-    itShouldBeDefined(mmap, 'MAP_UNINITIALIZED');
+    itShouldBeDefined(mmap, 'MAP_FIXED');
+    // TODO: should be check per platform
+    //itShouldBeDefined(mmap, 'MAP_GROWSDOWN');
+    //itShouldBeDefined(mmap, 'MAP_32BIT');
+    //itShouldBeDefined(mmap, 'MAP_ANONYMOUS');
+    //itShouldBeDefined(mmap, 'MAP_HUGETLB');
+    //itShouldBeDefined(mmap, 'MAP_LOCKED');
+    //itShouldBeDefined(mmap, 'MAP_NONBLOCK');
+    //itShouldBeDefined(mmap, 'MAP_POPULATE');
+    //itShouldBeDefined(mmap, 'MAP_STACK');
+    //itShouldBeDefined(mmap, 'MAP_UNINITIALIZED');
     itShouldBeDefined(mmap, 'PAGESIZE');
 
   });
