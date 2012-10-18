@@ -4,6 +4,7 @@ ifeq (${BUILDTYPE},Debug)
 GYP_BUILD_TYPE = --d
 else
 GYP_BUILD_TYPE = --r
+BUILDTYPE = Release
 endif
 
 TARGET = build/${BUILDTYPE}/kvs.node
