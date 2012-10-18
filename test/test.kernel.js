@@ -53,11 +53,20 @@ describe('kernel', function () {
           buf.length.should.eql(size);
           done();
         });
+
+        it('should be succeed with `3` arguments', function (done) {
+          (function () {
+            var buf = mmap.map(size, mmap.PROT_READ, mmap.MAP_SHARED);
+          }).should.throw(/Bad argument/);
+          done();
+        });
+
         it('should be succeed with `4` arguments', function (done) {
           var buf = mmap.map(size, mmap.PROT_READ, mmap.MAP_SHARED, fd);
           buf.length.should.eql(size);
           done();
         });
+
         it('should be succeed with arguments and callback', function (done) {
           mmap.map(size, mmap.PROT_READ, mmap.MAP_SHARED, fd, 0, function (err, buf) {
             if (err) { return done(err); }
