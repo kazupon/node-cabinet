@@ -40,7 +40,7 @@ void on_work(uv_work_t *work_req) {
   mmap_req_t *req = reinterpret_cast<mmap_req_t *>(work_req->data);
   assert(req != NULL);
 
-  req->map = (char *)mmap(0, req->size, req->protection, req->flags, req->fd, req->offset);
+  req->map = (char *)mmap(NULL, req->size, req->protection, req->flags, req->fd, req->offset);
 }
 
 void on_work_done(uv_work_t *work_req) {
@@ -129,7 +129,7 @@ Handle<Value> map(const Arguments &args) {
 
 
   if (req == NULL) { // sync
-    char *data = (char *)mmap(0, size, protection, flags, fd, offset);
+    char *data = (char *)mmap(NULL, size, protection, flags, fd, offset);
     if (data == MAP_FAILED) {
       return ThrowException(ErrnoException(errno, "mmap", ""));
     }
@@ -143,6 +143,8 @@ Handle<Value> map(const Arguments &args) {
 
     int32_t ret = uv_queue_work(uv_default_loop(), uv_req, on_work, on_work_done);
     TRACE("uv_queue_work: ret=%d\n", ret);
+    assert(ret == 0);
+
     return scope.Close(args.This());
   }
 }

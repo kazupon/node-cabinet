@@ -4,6 +4,7 @@ var should = require('should');
 var assert = require('assert');
 var format = require('util').format;
 var fs = require('fs');
+var path = require('path');
 var kernel = require('../lib/kvs').kernel;
 
 
@@ -76,8 +77,39 @@ describe('kernel', function () {
         });
       });
 
-      describe('large file size', function () {
-      });
+      var testMapSize = function (size) {
+        var file = path.join(__dirname, format('map%d', size));
+        var fd;
+        describe('map size', function () {
+          before(function (done) {
+            fd = fs.openSync(file, 'a+');
+            var buf = new Buffer(size);
+            buf.fill(0xFF, 0, buf.length);
+            fs.writeSync(fd, buf, 0, buf.length);
+            done();
+          });
+          after(function (done) {
+            fs.closeSync(fd);
+            fs.unlink(file);
+            done();
+          });
+          it(format('should be succedd with `%d` size', size), function (done) {
+            var b = mmap.map(size, mmap.PROT_READ | mmap.PROT_WRITE, mmap.MAP_SHARED, fd);
+            b.length.should.eql(size);
+            for (var i = 0; i < b.length; i++) {
+              b[i].should.eql(0xFF);
+            }
+            done();
+          });
+        });
+      };
+
+      testMapSize(mmap.PAGESIZE);
+      testMapSize(mmap.PAGESIZE * 2);
+      testMapSize(mmap.PAGESIZE * 3);
+      testMapSize(mmap.PAGESIZE * 8);
+      testMapSize(mmap.PAGESIZE * mmap.PAGESIZE);
+      //testMapSize(0x3fffffff);
     });
   });
 });
