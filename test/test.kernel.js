@@ -5,6 +5,7 @@ var assert = require('assert');
 var format = require('util').format;
 var fs = require('fs');
 var path = require('path');
+var fork = require('child_process').fork;
 var kernel = require('../lib/kvs').kernel;
 
 
@@ -80,11 +81,12 @@ describe('kernel', function () {
       var testMapSize = function (size) {
         var file = path.join(__dirname, format('map%d', size));
         var fd;
+        var VALUE = 0xFF;
         describe('map size', function () {
           before(function (done) {
             fd = fs.openSync(file, 'a+');
             var buf = new Buffer(size);
-            buf.fill(0xFF, 0, buf.length);
+            buf.fill(VALUE, 0, buf.length);
             fs.writeSync(fd, buf, 0, buf.length);
             done();
           });
@@ -97,7 +99,7 @@ describe('kernel', function () {
             var b = mmap.map(size, mmap.PROT_READ | mmap.PROT_WRITE, mmap.MAP_SHARED, fd);
             b.length.should.eql(size);
             for (var i = 0; i < b.length; i++) {
-              b[i].should.eql(0xFF);
+              b[i].should.eql(VALUE);
             }
             done();
           });
@@ -109,7 +111,44 @@ describe('kernel', function () {
       testMapSize(mmap.PAGESIZE * 3);
       testMapSize(mmap.PAGESIZE * 8);
       testMapSize(mmap.PAGESIZE * mmap.PAGESIZE);
-      //testMapSize(0x3fffffff);
+      //testMapSize(0x3fffffff); // 1GB: (0x40000000 - 0x00000001)
+      
+      describe('shared memory', function () {
+        var fd;
+        var shared_path = __dirname + '/shared';
+        var size = mmap.PAGESIZE;
+        before(function (done) {
+          fd = fs.openSync(shared_path, 'a+');
+          var buf = new Buffer(size);
+          buf.fill(0x00, 0, buf.length);
+          fs.writeSync(fd, buf, 0, buf.length);
+          done();
+        });
+        after(function (done) {
+          fs.closeSync(fd);
+          fs.unlink(shared_path);
+          done();
+        });
+        it('should be read `0xFF` value', function (done) {
+          mmap.map(
+            size, mmap.PROT_READ | mmap.PROT_WRITE, 
+            mmap.MAP_SHARED, fd, function (err, buf) {
+            if (err) { return done(err); }
+            buf[0] = 0xFF;
+            var worker = fork(__dirname + '/worker.js');
+            worker.on('message', function (msg) {
+              if (!msg || !msg.cmd || msg.cmd !== 'get') {
+                worker.kill();
+                return done('an unexpected error');
+              }
+              msg.value.should.eql(0xFF);
+              worker.kill();
+              done();
+            });
+            worker.send({ cmd: 'get' });
+          });
+        });
+      });
     });
   });
 });
