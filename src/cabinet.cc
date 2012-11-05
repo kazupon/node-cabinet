@@ -1,10 +1,10 @@
 /*
  * main
- * Copyright (C) 2012 kazuya kawaguchi. See Copyright Notice in kvs.h
+ * Copyright (C) 2012 kazuya kawaguchi. See Copyright Notice in cabinet.h
  */
 
 #include <node.h>
-#include "kvs.h"
+#include "cabinet.h"
 #include "kernel_wrap.h"
 
 using namespace v8;
@@ -15,4 +15,4 @@ void init(Handle<Object> target) {
   kernel::load(target);
 }
 
-NODE_MODULE(kvs, init);
+NODE_MODULE(cabinet, init);

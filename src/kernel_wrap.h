@@ -1,6 +1,6 @@
 /*
  * kernel (system call) wapper
- * Copyright (C) 2012 kazuya kawaguchi. See Copyright Notice in kvs.h
+ * Copyright (C) 2012 kazuya kawaguchi. See Copyright Notice in cabinet.h
  */
 
 #ifndef __KERNEL_WRAP_H__

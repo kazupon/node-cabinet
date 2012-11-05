@@ -6,7 +6,7 @@ var format = require('util').format;
 var fs = require('fs');
 var path = require('path');
 var fork = require('child_process').fork;
-var kernel = require('../lib/kvs').kernel;
+var kernel = require('../lib/cabinet').kernel;
 
 
 var itShouldBeDefined = function (obj, prop) {

@@ -1,6 +1,6 @@
 /*
  * kernel (system call) wapper
- * Copyright (C) 2012 kazuya kawaguchi. See Copyright Notice in kvs.h
+ * Copyright (C) 2012 kazuya kawaguchi. See Copyright Notice in cabinet.h
  */
 
 #define BUILDING_NODE_EXTENSION
@@ -10,6 +10,7 @@
 #include "debug.h"
 #include <errno.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <sys/mman.h>
 #include <node_buffer.h>
 
@@ -18,7 +19,7 @@ using namespace node;
 namespace kernel {
 
 
-typedef struct mmap_req_t {
+struct mmap_req_t {
   size_t size;
   int32_t protection;
   int32_t flags;

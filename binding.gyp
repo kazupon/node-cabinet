@@ -11,10 +11,10 @@
   },
   'targets': [
     {
-      'target_name': 'kvs',
+      'target_name': 'cabinet',
       'sources': [
         'src/kernel_wrap.cc',
-        'src/kvs.cc'
+        'src/cabinet.cc'
       ]
     }
   ]

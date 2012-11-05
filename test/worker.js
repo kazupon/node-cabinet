@@ -1,4 +1,4 @@
-var kernel = require('../lib/kvs').kernel;
+var kernel = require('../lib/cabinet').kernel;
 var mmap = kernel.mmap;
 var fs = require('fs');
 

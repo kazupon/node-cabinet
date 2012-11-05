@@ -1,6 +1,6 @@
 {
-    "name": "node-kvs",
-    "main": "./lib/kvs",
+    "name": "node-cabinet",
+    "main": "./lib/cabinet",
     "version": "0.0.1",
     "description": "Key-value store for Node.js",
     "tags": ["kvs"],
@@ -8,10 +8,10 @@
     "author": "kazupon (kazuya kawaguchi) <kawakazu80@gmail.com>",
     "repository": {
         "type": "git",
-        "url": "https://github.com/kazupon/node-kvs.git"
+        "url": "https://github.com/kazupon/node-cabinet.git"
     },
     "bugs": {
-        "url": "https://github.com/kazupon/node-kvs/issues"
+        "url": "https://github.com/kazupon/node-cabinet/issues"
     },
     "dependencies": {
         "bindings": "1.0.0"

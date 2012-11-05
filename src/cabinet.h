@@ -1,5 +1,5 @@
 /*
- * node-kvs -- Key-value store for Node
+ * node-cabinet -- Key-value store for Node
  * Copyright (C) 2012 kazuya kawaguchi. All rights reserved.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -24,9 +24,9 @@
  * [ MIT license: http://www.opensource.org/licenses/mit-license.php ]
  */
 
-#ifndef __KVS_H__
-#define __KVS_H__
+#ifndef __CABINET_H__
+#define __CABINET_H__
 
 
-#endif /* __KVS_H__ */
+#endif /* __CABINET_H__ */
 

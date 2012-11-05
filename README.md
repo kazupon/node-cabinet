@@ -1,4 +1,4 @@
-# node-kvs
+# node-cabinet
 
 Key-value store for Node
 
